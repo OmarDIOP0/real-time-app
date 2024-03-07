@@ -1,7 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import GenderCheckbox from './GenderCheckbox'
+import { Link } from 'react-router-dom'
 
 const Signup = () => {
+
+  const [inputs,setInputs] =useState({
+    fullName:'',
+    username:'',
+    password:'',
+    confirmPassword:'',
+    gender:''
+  })
+  const handleCheckBoxChange=(gender)=>{
+    setInputs({...inputs,gender})
+  }
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    console.log(inputs);
+  }
   return (
     <div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
       <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding  backdrop-filter
@@ -10,35 +26,43 @@ const Signup = () => {
             Signup
         <span className='text-blue-500'>ChatApp</span>
         </h1>
-        <form>
+        <form onSubmit={handleSubmit}>
         <div>
             <label className='label p-2'>
               <span className=' text-white label-text'>Fullname</span>
             </label>
-            <input type="text" placeholder='Omar Diop' className='w-full input input-bordered h-10 bg-black text-white' />
+            <input type="text" placeholder='Omar Diop' className='w-full input input-bordered h-10 bg-black text-white'
+             value={inputs.fullName}
+             onChange={(e)=>setInputs({...inputs,fullName:e.target.value})} />
           </div>
           <div>
             <label className='label p-2'>
               <span className=' text-white label-text'>Username</span>
             </label>
-            <input type="text" placeholder='omzo' className='w-full input input-bordered h-10 bg-black text-white' />
+            <input type="text" placeholder='omzo' className='w-full input input-bordered h-10 bg-black text-white' 
+            value={inputs.username} 
+            onChange={(e)=>setInputs({...inputs,username:e.target.value})}/>
           </div>
           <div>
             <label className='label p-2'>
               <span className=' text-white label-text'>Password</span>
             </label>
-            <input type="password" placeholder='Enter password' className='w-full input input-bordered h-10 bg-black text-white' />
+            <input type="password" placeholder='Enter password' className='w-full input input-bordered h-10 bg-black text-white' 
+            value={inputs.password} 
+            onChange={(e)=>setInputs({...inputs,password:e.target.value})}/>
           </div>
           <div>
             <label className='label p-2'>
               <span className=' text-white label-text'>Confim Password</span>
             </label>
-            <input type="password" placeholder='Confirm password' className='w-full input input-bordered h-10 bg-black text-white' />
+            <input type="password" placeholder='Confirm password' className='w-full input input-bordered h-10 bg-black text-white' 
+            value={inputs.confirmPassword} 
+            onChange={(e)=>setInputs({...inputs,confirmPassword:e.target.value})}/>
           </div>
-          <GenderCheckbox/>
-          <a href="#" className='text-sm  text-black hover:underline hover:text-blue-600 mt-2 inline-block'>
+          <GenderCheckbox onCheckBoxChange={handleCheckBoxChange} selectedGender={inputs.gender} />
+          <Link to={'/login'} className='text-sm  text-black hover:underline hover:text-blue-600 mt-2 inline-block'>
             Already have an account ?
-          </a>
+          </Link>
           <div className="">
             <button className='btn btn-block btn-sm mt-2 bg-black text-white border-black'>Signup</button>
           </div>
