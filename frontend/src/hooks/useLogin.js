@@ -7,10 +7,9 @@ const useLogin = () => {
     const {setAuthUser} = useAuthContext();
 
     const login = async(username,password)=>{
+        const success = handleInputError({username,password});
+        if(!success) return;
         setLoading(true);
-        if(!username || !password){
-            toast.error('Fields are required');
-        }
         try {
             const res = await fetch('/api/auth/login',{
                 method:"POST",
