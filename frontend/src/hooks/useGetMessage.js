@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react'
 import useConversation from '../zustand/useConversation';
 import toast from 'react-hot-toast';
 
-export const useGetMessage = () => {
+const useGetMessage = () => {
   const [loading,setLoading]=useState(false);
-  const {messsages,setMessages,selectConversation}=useConversation();
+  const {messages,setMessages,selectConversation}=useConversation();
+    
   useEffect(()=>{
     const getMessage=async ()=>{
-        setLoading(false);
+        setLoading(true);
         try {
-            const res = await fetchh(`/api/messages/${selectConversation._id}`);
+            const res = await fetch(`/api/messages/${selectConversation._id}`);
             const data = await res.json();
-            if(data.error) throw new Error(error.messsage);
+            if(data.error) throw new Error(data.error);
             setMessages(data);
         } catch (error) {
             toast.error(error.messsage);
@@ -19,9 +20,9 @@ export const useGetMessage = () => {
             setLoading(false);
         }
     };
-    if(selectConversation._id) getMessage();
-  },[selectConversation._id,setMessages]);
+    if(selectConversation?._id) getMessage();
+  },[selectConversation?._id,setMessages]);
   
-  return {messsages,loading}; 
+  return {messages,loading}; 
 }
-export default useConversation;
+export default useGetMessage;
