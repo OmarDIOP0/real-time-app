@@ -5,7 +5,6 @@ import MessageSkeleton from '../skeleton/MessageSkeleton';
 
 const Messages = () => {
   const {messages,loading} = useGetMessage();
-  console.log("message",messages);
   return (
     <div className='px-4 flex-1 overflow-auto'>
       {!loading && messages.length>0 && 
