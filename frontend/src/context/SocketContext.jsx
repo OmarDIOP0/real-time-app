@@ -12,6 +12,7 @@ export const SocketContextProvider = ({children})=>{
     const [socket,setSocket] = useState(null);
     const [onlineUsers,setOnlineUsers] =useState([]);
     const {authUser} = useAuthContext();  
+    
     useEffect(()=>{
         if(authUser){
             const socket = io("http://localhost:5000",{
@@ -32,7 +33,7 @@ export const SocketContextProvider = ({children})=>{
                 setSocket(null);
             }
         }
-    },[]);
+    },[authUser]);
     return <SocketContext.Provider value={{socket,onlineUsers}}>{children}</SocketContext.Provider>
     
 }
